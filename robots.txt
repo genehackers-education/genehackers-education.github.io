@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://genehackers-education.github.io/sitemap.xml
