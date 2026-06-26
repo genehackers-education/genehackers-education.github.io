@@ -71,6 +71,10 @@ img{max-width:100%;}
 .btn.salmon{background:#F7849B;}
 .btn.salmon:hover{background:#F06A86;}
 
+.full-toolkit-btn {
+  margin-left: 8px;
+}
+
 /* ---------- typography ---------- */
 h1{font-size:2.15rem;line-height:1.12;color:#211F22;margin:.1em 0 .35em;}
 h2{font-size:1.42rem;color:#211F22;margin:1.7em 0 .55em;padding-top:.2em;}
