@@ -45,7 +45,7 @@ To change wording, edit the `.html` files. To swap a download, drop a new file i
 
 ## Found it useful, or want to run an event with us?
 
-We'd love to know where these lessons end up — **[tell us here](https://genehackers-education.github.io/about.html)**, or reach out if you want to team up.
+We'd love to know where these lessons end up — **[tell us here]([https://genehackers-education.github.io/about.html](https://forms.gle/bUFeKZsFfWhidJTp8))**, or reach out if you want to team up.
 
 ---
 
