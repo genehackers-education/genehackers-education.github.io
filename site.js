@@ -1,23 +1,16 @@
 /* =============================================================
    Genehackers Outreach Toolkit — site behavior (plain ES5)
-
-   >>> EDIT THESE TWO LINES AFTER YOU MAKE YOUR ACCOUNTS <<<
-   Everything else updates automatically across the whole site.
    ============================================================= */
 var CONFIG = {
-  // Your GoatCounter code = the part before ".goatcounter.com".
-  // e.g. if your dashboard is https://genehackers.goatcounter.com,
-  // put 'genehackers' here. Leave as-is to turn analytics off.
-  goatcounterCode: 'YOURCODE',
+  goatcounterCode: 'genehackers-education',
 
-  // Paste your Google Form share link here (the whole https:// URL).
-  reportFormUrl: 'https://forms.gle/REPLACE-ME'
+  reportFormUrl: 'https://forms.gle/bUFeKZsFfWhidJTp8'
 };
 /* ============================================================= */
 
 (function () {
-  // --- load GoatCounter only if a real code was set ---
-  if (CONFIG.goatcounterCode && CONFIG.goatcounterCode !== 'YOURCODE') {
+  // --- load GoatCounter
+  if (CONFIG.goatcounterCode) {
     var gc = document.createElement('script');
     gc.async = true;
     gc.setAttribute('data-goatcounter',
