@@ -37,7 +37,7 @@ downloads/    the toolkit files people download
 Want to fork this for your own team? It hosts free on GitHub Pages with nothing to install:
 
 1. Copy these files into a new repo named `<your-username>.github.io`.
-2. *(Optional)* Open `site.js` and set two things at the top: your [GoatCounter](https://www.goatcounter.com) code (free, privacy-friendly analytics) and your Google Form link for the footer "report back" line. Both are public, client-side values, so they're fine to commit — they're not secrets.
+2. *(Optional)* Open `site.js` and set two things at the top: your [GoatCounter](https://www.goatcounter.com) code (free, privacy-friendly analytics) and your Google Form link for the footer "report back" line. Both are public, client-side values, so they're fine to commit (don't worry... they're not secrets).
 3. In the repo: **Settings → Pages → Deploy from a branch → `main` / root**.
 4. About a minute later, it's live at `https://<your-username>.github.io`.
 
