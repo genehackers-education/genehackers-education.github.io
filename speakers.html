@@ -136,8 +136,10 @@ var SPEAKERS = [
       +     '<span class="ini" style="background:'+col+'">'+esc(initials(s.name))+'</span>'
       +     '<img alt="'+esc(s.name)+'" src="'+img+'"'
       +       ' onload="var p=this.parentNode.querySelector(\'.ini\'); if(p)p.style.display=\'none\';"'
-      +       ' onerror="if(this.getAttribute(\'data-alt\')!==\'1\'){this.setAttribute(\'data-alt\',\'1\');this.src=this.src.replace(/\\.jpg$/,\'.png\');}else{this.style.display=\'none\';}">'
-      +   '</div>'
+      +       ' onerror="var step=this.getAttribute(\'data-alt\')||\'0\';'
+      +       'if(step===\'0\'){this.setAttribute(\'data-alt\',\'1\');this.src=this.src.replace(/\\.jpg$/, \'.jpeg\');}'
+      +       'else if(step===\'1\'){this.setAttribute(\'data-alt\',\'2\');this.src=this.src.replace(/\\.jpeg$/, \'.png\');}'
+      +       'else{this.style.display=\'none\';}">'
       +   '<div class="body">'
       +     '<div class="nm">'+esc(s.name)+'</div>'
       +     (s.role  ? '<div class="role">'+esc(s.role)+'</div>' : '')
