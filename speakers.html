@@ -4,15 +4,32 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Speaker series · Synbio Outreach Toolkit</title>
-<meta name="description" content="Alongside classroom visits, UChicago Genehackers runs a speaker series introducing students to synthetic biology and the people who work in it.">
+<meta name="description" content="The researchers and founders who've spoken in the UChicago Genehackers synthetic biology speaker series — most recent first.">
 <link rel="canonical" href="https://genehackers-education.github.io/speakers.html">
 <meta property="og:title" content="Speaker series">
-<meta property="og:description" content="Alongside classroom visits, UChicago Genehackers runs a speaker series introducing students to synthetic biology and the people who work in it.">
+<meta property="og:description" content="The researchers and founders who've spoken in the UChicago Genehackers synthetic biology speaker series.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://genehackers-education.github.io/speakers.html">
 <meta name="twitter:card" content="summary">
 <link rel="icon" type="image/png" href="assets/green_virus.png">
 <link rel="stylesheet" href="style.css">
+<style>
+  .yr{display:flex;align-items:center;gap:12px;margin:32px 0 15px;}
+  .yr .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;}
+  .yr .y{font-family:'Nunito';font-weight:700;font-size:1.15rem;color:#211F22;}
+  .yr .rule{flex:1 1 auto;height:1px;background:#EADFC8;}
+  .spk{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid #EFE7D5;border-radius:14px;padding:14px 17px;margin:0 0 11px;transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease;}
+  .spk:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(33,31,34,.09);border-color:#CDEBDD;}
+  .spk .av{flex:0 0 auto;width:66px;height:66px;border-radius:50%;overflow:hidden;position:relative;background:#F1E9D6;}
+  .spk .ini{position:absolute;top:0;left:0;right:0;bottom:0;text-align:center;line-height:66px;color:#fff;font-family:'Nunito';font-weight:700;font-size:1.35rem;}
+  .spk .av img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;}
+  .spk .body{min-width:0;padding-top:1px;}
+  .spk .nm{font-family:'Nunito';font-weight:700;font-size:1.06rem;color:#211F22;line-height:1.22;}
+  .spk .role{font-size:.92rem;color:#5C5853;margin-top:2px;line-height:1.35;}
+  .spk .topic{font-size:.92rem;color:#0E7A57;margin-top:3px;font-style:italic;}
+  .spk .date{font-size:.8rem;color:#9A8F76;font-family:'Nunito';font-weight:700;margin-top:6px;letter-spacing:.01em;}
+  @media (max-width:520px){.spk{padding:12px 13px;gap:12px;} .spk .av{width:54px;height:54px;} .spk .ini{line-height:54px;font-size:1.1rem;}}
+</style>
 </head>
 <body>
 <nav id="sidebar">
@@ -35,12 +52,21 @@
       <main class="page-main">
 <span class="eyebrow">About</span>
 <h1>Speaker series</h1>
-<p class="lead">Alongside the classroom visits, we run a speaker series that introduces students to synthetic biology and the people who actually work in it.</p>
-<p>The sessions are short, friendly, and aimed at making the field feel reachable &mdash; what synthetic biologists work on, how someone gets into it, and what kinds of problems the tools in this toolkit are used for in the real world.</p>
-<div class="note"><span class="nt">Genehackers:</span> add your upcoming sessions, past topics, or a sign-up link here. (Edit <code>speakers.html</code> &mdash; this paragraph is a placeholder.)</div>
-<p>Interested in having us speak, or speaking to our group? <a href="#" class="report-link">Get in touch</a>.</p>
+<p class="lead">Alongside the classroom visits, we bring in researchers and founders from across synthetic biology &mdash; CRISPR, protein design, biomanufacturing, cell therapies, and more &mdash; to talk about their work and how they got into it.</p>
+<p>It's a chance for students to meet the people behind the field and ask them anything. Here's everyone who's joined us so far, most recent first.</p>
+
+<!-- ============================================================
+     GENEHACKERS: to add a speaker, copy one { ... } block below
+     and put it at the top of the list (newest first).
+     Headshots: drop a photo into  assets/speakers/  named after the
+     person (lowercase, hyphens), e.g.  william-grubbe.jpg
+     .jpg or .png both work. No photo yet? A colored initials circle
+     shows automatically, so you can add photos whenever.
+     ============================================================ -->
+<div id="speakers"></div>
+
+<p style="margin-top:26px" class="muted">Want to speak, or know someone who'd be a great fit? <a href="about.html">Reach out</a>.</p>
       </main>
-      
     </div>
   </div>
   <footer>
@@ -49,5 +75,79 @@
   </footer>
 </div>
 <script src="site.js"></script>
+<script>
+/* Speaker list, newest first. Edit this array to add/reorder speakers. */
+var SPEAKERS = [
+  { name:"Dr. William Grubbe",         role:"Postdoctoral Scholar, University of Washington", date:"May 5, 2026", year:2026 },
+  { name:"Prof. D. Allan Drummond",    role:"Associate Professor of Biochemistry & Molecular Biology, University of Chicago", date:"April 28, 2026", year:2026 },
+  { name:"Vera Beilinson",             role:"PhD Candidate, Caltech", topic:"Host–microbe interactions research", date:"April 20, 2026", year:2026 },
+  { name:"Dr. Michael Köpke",          role:"Chief Innovation Officer, LanzaTech", date:"April 13, 2026", year:2026 },
+  { name:"Prof. Milos Simic",          role:"Neubauer Family Assistant Professor, Pritzker School of Molecular Engineering, UChicago", date:"April 7, 2026", year:2026 },
+  { name:"Prof. Wilton Snead",         role:"Assistant Professor of Cell & Developmental Biology, Northwestern", date:"April 1, 2026", year:2026 },
+
+  { name:"Dr. Arthur Prindle",         role:"Assistant Professor of Biochemistry & Molecular Genetics, Northwestern University", date:"April 25, 2025", year:2025 },
+  { name:"Dr. Mark Mimee",             role:"Assistant Professor of Microbiology & Molecular Engineering, University of Chicago", date:"April 14, 2025", year:2025 },
+  { name:"Dr. Alexander Vlahos",       role:"Assistant Professor of Biomedical Engineering, Georgia Tech", date:"April 9, 2025", year:2025 },
+  { name:"Dr. Julius Lucks",           role:"Professor of Chemical & Biological Engineering, Northwestern University", date:"April 7, 2025", year:2025 },
+  { name:"Dr. Xiaoyang Wu",            role:"Associate Professor, Ben May Department for Cancer Research, University of Chicago", date:"April 3, 2025", year:2025 },
+  { name:"Cian Colgan",                role:"Senior Research Associate, Caribou Biosciences", date:"April 2, 2025", year:2025 },
+
+  { name:"Dr. Danielle Tullman-Ercek", topic:"Protein complex self-assembly", date:"February 29, 2024", year:2024 },
+  { name:"Dr. Joshua Leonard",         topic:"Cell-based therapies & systems", date:"February 21, 2024", year:2024 },
+  { name:"Dr. Juan Huang",             topic:"T-cell & immuno-engineering", date:"February 8, 2024", year:2024 },
+  { name:"Dr. Andrew Ferguson",        topic:"Designing functional protein sequences", date:"February 7, 2024", year:2024 },
+
+  { name:"Dr. Ed Boyden",              role:"MIT McGovern Institute", date:"April 25, 2022", year:2022 },
+  { name:"Dr. Andrew Fire",            role:"Stanford University", date:"April 2022", year:2022 },
+  { name:"Klevin Lo",                  role:"Milky Way Investments · Altos Labs", date:"April 18, 2022", year:2022 }
+];
+
+(function(){
+  var DOT = { 2026:'#1DC48E', 2025:'#21A8D8', 2024:'#F7849B', 2022:'#9B59B6' };
+  var COLORS = ['#1DC48E','#21A8D8','#F7849B','#FD4426','#9B59B6','#F0B400'];
+
+  function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function core(name){ return name.replace(/^(Dr\.|Prof\.)\s+/,''); }
+  function slug(s){
+    s = s.replace(/ö/g,'o').replace(/ü/g,'u').replace(/ä/g,'a').replace(/é/g,'e').replace(/è/g,'e').replace(/ñ/g,'n');
+    try { s = s.normalize('NFD').replace(/[\u0300-\u036f]/g,''); } catch(e){}
+    return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+  }
+  function initials(name){
+    var parts = core(name).split(/\s+/).filter(function(p){ return p && !/^[A-Za-z]\.$/.test(p); });
+    if(!parts.length) parts = core(name).split(/\s+/);
+    var a = parts[0].charAt(0);
+    var b = parts.length > 1 ? parts[parts.length-1].charAt(0) : '';
+    return (a + b).toUpperCase();
+  }
+
+  var html = '', lastYear = null;
+  for (var i=0; i<SPEAKERS.length; i++){
+    var s = SPEAKERS[i];
+    if (s.year !== lastYear){
+      html += '<div class="yr"><span class="dot" style="background:'+(DOT[s.year]||'#1DC48E')+'"></span>'
+            + '<span class="y">'+s.year+'</span><span class="rule"></span></div>';
+      lastYear = s.year;
+    }
+    var img = 'assets/speakers/' + slug(core(s.name)) + '.jpg';
+    var col = COLORS[i % COLORS.length];
+    html += '<div class="spk">'
+      +   '<div class="av">'
+      +     '<span class="ini" style="background:'+col+'">'+esc(initials(s.name))+'</span>'
+      +     '<img alt="'+esc(s.name)+'" src="'+img+'"'
+      +       ' onload="var p=this.parentNode.querySelector(\'.ini\'); if(p)p.style.display=\'none\';"'
+      +       ' onerror="if(this.getAttribute(\'data-alt\')!==\'1\'){this.setAttribute(\'data-alt\',\'1\');this.src=this.src.replace(/\\.jpg$/,\'.png\');}else{this.style.display=\'none\';}">'
+      +   '</div>'
+      +   '<div class="body">'
+      +     '<div class="nm">'+esc(s.name)+'</div>'
+      +     (s.role  ? '<div class="role">'+esc(s.role)+'</div>' : '')
+      +     (s.topic ? '<div class="topic">'+esc(s.topic)+'</div>' : '')
+      +     '<div class="date">'+esc(s.date)+'</div>'
+      +   '</div>'
+      + '</div>';
+  }
+  document.getElementById('speakers').innerHTML = html;
+})();
+</script>
 </body>
 </html>
