@@ -105,8 +105,8 @@ var SPEAKERS = [
 (function(){
   var DOT = { 2026:'#1DC48E', 2025:'#21A8D8', 2024:'#F7849B', 2022:'#9B59B6' };
   var COLORS = ['#1DC48E','#21A8D8','#F7849B','#FD4426','#9B59B6','#F0B400'];
+  var IMG_EXTENSIONS = ['jpg', 'jpeg', 'png'];
 
-  function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   function core(name){ return name.replace(/^(Dr\.|Prof\.)\s+/,''); }
   function slug(s){
     s = s.replace(/ö/g,'o').replace(/ü/g,'u').replace(/ä/g,'a').replace(/é/g,'e').replace(/è/g,'e').replace(/ñ/g,'n');
@@ -120,35 +120,84 @@ var SPEAKERS = [
     var b = parts.length > 1 ? parts[parts.length-1].charAt(0) : '';
     return (a + b).toUpperCase();
   }
+  function imgSrcForSpeaker(speaker, ext){
+    return 'assets/speakers/' + slug(core(speaker.name)) + '.' + ext;
+  }
+  function appendText(parent, className, text){
+    if(!text) return;
+    var el = document.createElement('div');
+    el.className = className;
+    el.textContent = text;
+    parent.appendChild(el);
+  }
 
-  var html = '', lastYear = null;
-  for (var i=0; i<SPEAKERS.length; i++){
-    var s = SPEAKERS[i];
+  var wrap = document.getElementById('speakers');
+  var lastYear = null;
+
+  SPEAKERS.forEach(function(s, i){
     if (s.year !== lastYear){
-      html += '<div class="yr"><span class="dot" style="background:'+(DOT[s.year]||'#1DC48E')+'"></span>'
-            + '<span class="y">'+s.year+'</span><span class="rule"></span></div>';
+      var yr = document.createElement('div');
+      yr.className = 'yr';
+
+      var dot = document.createElement('span');
+      dot.className = 'dot';
+      dot.style.background = DOT[s.year] || '#1DC48E';
+      yr.appendChild(dot);
+
+      var year = document.createElement('span');
+      year.className = 'y';
+      year.textContent = s.year;
+      yr.appendChild(year);
+
+      var rule = document.createElement('span');
+      rule.className = 'rule';
+      yr.appendChild(rule);
+
+      wrap.appendChild(yr);
       lastYear = s.year;
     }
-    var img = 'assets/speakers/' + slug(core(s.name)) + '.jpg';
-    var col = COLORS[i % COLORS.length];
-    html += '<div class="spk">'
-      +   '<div class="av">'
-      +     '<span class="ini" style="background:'+col+'">'+esc(initials(s.name))+'</span>'
-      +     '<img alt="'+esc(s.name)+'" src="'+img+'"'
-      +       ' onload="var p=this.parentNode.querySelector(\'.ini\'); if(p)p.style.display=\'none\';"'
-      +       ' onerror="var step=this.getAttribute(\'data-alt\')||\'0\';'
-      +       'if(step===\'0\'){this.setAttribute(\'data-alt\',\'1\');this.src=this.src.replace(/\\.jpg$/, \'.jpeg\');}'
-      +       'else if(step===\'1\'){this.setAttribute(\'data-alt\',\'2\');this.src=this.src.replace(/\\.jpeg$/, \'.png\');}'
-      +       'else{this.style.display=\'none\';}">'
-      +   '<div class="body">'
-      +     '<div class="nm">'+esc(s.name)+'</div>'
-      +     (s.role  ? '<div class="role">'+esc(s.role)+'</div>' : '')
-      +     (s.topic ? '<div class="topic">'+esc(s.topic)+'</div>' : '')
-      +     '<div class="date">'+esc(s.date)+'</div>'
-      +   '</div>'
-      + '</div>';
-  }
-  document.getElementById('speakers').innerHTML = html;
+
+    var card = document.createElement('div');
+    card.className = 'spk';
+
+    var av = document.createElement('div');
+    av.className = 'av';
+
+    var ini = document.createElement('span');
+    ini.className = 'ini';
+    ini.style.background = COLORS[i % COLORS.length];
+    ini.textContent = initials(s.name);
+    av.appendChild(ini);
+
+    var img = document.createElement('img');
+    img.alt = s.name;
+    img.dataset.extIndex = '0';
+    img.addEventListener('load', function(){
+      ini.style.display = 'none';
+    });
+    img.addEventListener('error', function(){
+      var nextIndex = parseInt(img.dataset.extIndex || '0', 10) + 1;
+      if (nextIndex < IMG_EXTENSIONS.length) {
+        img.dataset.extIndex = String(nextIndex);
+        img.src = imgSrcForSpeaker(s, IMG_EXTENSIONS[nextIndex]);
+      } else {
+        img.style.display = 'none';
+      }
+    });
+    img.src = imgSrcForSpeaker(s, IMG_EXTENSIONS[0]);
+    av.appendChild(img);
+
+    var body = document.createElement('div');
+    body.className = 'body';
+    appendText(body, 'nm', s.name);
+    appendText(body, 'role', s.role);
+    appendText(body, 'topic', s.topic);
+    appendText(body, 'date', s.date);
+
+    card.appendChild(av);
+    card.appendChild(body);
+    wrap.appendChild(card);
+  });
 })();
 </script>
 </body>
