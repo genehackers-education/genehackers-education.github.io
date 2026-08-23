@@ -148,3 +148,30 @@ var CONFIG = {
   if (document.readyState !== 'loading') initSlides();
   else document.addEventListener('DOMContentLoaded', initSlides);
 })();
+
+/* ---- TOC scroll-lock: makes the "On this page" box stop following you
+   once it reaches the bottom of a chosen section, then resume if you
+   scroll back up past that point. Uses native CSS sticky, so the
+   stop/resume itself is free -- this just sets how tall the "track" is
+   that the box is allowed to stick within.
+   Opt in per page: <div class="toc-rail" data-lock-until="ID_TO_STOP_AT"> */
+(function () {
+  function applyLocks() {
+    var rails = document.querySelectorAll('.toc-rail[data-lock-until]');
+    for (var i = 0; i < rails.length; i++) {
+      var rail = rails[i];
+      var boundary = document.getElementById(rail.getAttribute('data-lock-until'));
+      if (!boundary) continue;
+      var railTop = rail.getBoundingClientRect().top + window.pageYOffset;
+      var stopAt = boundary.getBoundingClientRect().top + window.pageYOffset;
+      var h = stopAt - railTop;
+      rail.style.height = (h > 0 ? h : 0) + 'px';
+    }
+  }
+  function ready(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
+  ready(function () {
+    applyLocks();
+    window.addEventListener('load', applyLocks);   // re-measure after fonts/images settle
+    window.addEventListener('resize', applyLocks);
+  });
+})();
