@@ -60,47 +60,90 @@ var CONFIG = {
   });
 })();
 
-/* ---- slide-deck preview carousels (added for lesson pages) ---- */
+/* ---- slide-deck preview carousels ----
+   Auto-detects the image filenames (works with 1.jpg, Slide1.jpg, Slide1.JPG,
+   .jpeg or .png) and auto-counts how many slides are in each folder, so the
+   filenames and any stale data-count no longer matter. */
 (function () {
+  var PATTERNS = [
+    function (i) { return i + '.jpg'; },
+    function (i) { return 'Slide' + i + '.jpg'; },
+    function (i) { return 'Slide' + i + '.JPG'; },
+    function (i) { return 'Slide' + i + '.jpeg'; },
+    function (i) { return 'Slide' + i + '.png'; },
+    function (i) { return 'Slide' + i + '.PNG'; },
+    function (i) { return i + '.jpeg'; },
+    function (i) { return i + '.png'; }
+  ];
+ 
+  function setupDeck(el) {
+    var folder = el.getAttribute('data-folder');
+    if (!folder) return;
+ 
+    var pi = 0;
+    function findPattern() {
+      if (pi >= PATTERNS.length) {
+        el.innerHTML = '<div class="bar" style="justify-content:center;padding:20px;color:#8a1f1f">'
+          + 'Slides couldn\u2019t load \u2014 check that images are in <code>' + folder + '/</code>.</div>';
+        return;
+      }
+      var test = new Image();
+      var pat = PATTERNS[pi];
+      test.onload = function () { countThenBuild(pat); };
+      test.onerror = function () { pi++; findPattern(); };
+      test.src = folder + '/' + pat(1);
+    }
+ 
+    function countThenBuild(pat) {
+      var api = build(pat);          // show slide 1 immediately
+      var n = 1;
+      (function probe() {            // then count the rest in the background
+        var im = new Image();
+        im.onload = function () { n++; probe(); };
+        im.onerror = function () { api.setCount(n); };
+        im.src = folder + '/' + pat(n + 1);
+      })();
+    }
+ 
+    function build(pat) {
+      var count = 1, idx = 0, known = false;
+      el.innerHTML =
+          '<div class="stage"><img alt="Slide 1"></div>'
+        + '<button class="nav prev" aria-label="Previous slide">&#8249;</button>'
+        + '<button class="nav next" aria-label="Next slide">&#8250;</button>'
+        + '<div class="bar"><span class="count"></span><button class="full">Fullscreen</button></div>';
+      var img = el.querySelector('img'), counter = el.querySelector('.count');
+      function label() { counter.textContent = known ? ((idx + 1) + ' / ' + count) : ('' + (idx + 1)); }
+      function show(i) {
+        idx = (i % count + count) % count;
+        img.src = folder + '/' + pat(idx + 1);
+        img.alt = 'Slide ' + (idx + 1);
+        label();
+      }
+      function next() { show(idx + 1); }
+      function prev() { show(idx - 1); }
+      el.querySelector('.next').addEventListener('click', next);
+      el.querySelector('.prev').addEventListener('click', prev);
+      el.querySelector('.stage').addEventListener('click', next);
+      el.querySelector('.full').addEventListener('click', function () {
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+      });
+      el.setAttribute('tabindex', '0');
+      el.addEventListener('keydown', function (e) {
+        if (e.keyCode === 39) { next(); e.preventDefault(); }
+        else if (e.keyCode === 37) { prev(); e.preventDefault(); }
+      });
+      show(0);
+      return { setCount: function (c) { count = c; known = true; label(); } };
+    }
+ 
+    findPattern();
+  }
+ 
   function initSlides() {
     var decks = document.querySelectorAll('.slides[data-folder]');
-    for (var d = 0; d < decks.length; d++) {
-      (function (el) {
-        var folder = el.getAttribute('data-folder');
-        var count = parseInt(el.getAttribute('data-count') || '0', 10);
-        if (!count) return;
-        var idx = 0;
-        el.innerHTML =
-            '<div class="stage"><img alt="Slide 1"></div>'
-          + '<button class="nav prev" aria-label="Previous slide">&#8249;</button>'
-          + '<button class="nav next" aria-label="Next slide">&#8250;</button>'
-          + '<div class="bar"><span class="count"></span><button class="full">Fullscreen</button></div>';
-        var img = el.querySelector('img');
-        var counter = el.querySelector('.count');
-        function show(i) {
-          idx = (i % count + count) % count;
-          img.src = folder + '/' + (idx + 1) + '.jpg';
-          img.alt = 'Slide ' + (idx + 1);
-          counter.textContent = (idx + 1) + ' / ' + count;
-        }
-        function next() { show(idx + 1); }
-        function prev() { show(idx - 1); }
-        el.querySelector('.next').addEventListener('click', next);
-        el.querySelector('.prev').addEventListener('click', prev);
-        el.querySelector('.stage').addEventListener('click', next);
-        el.querySelector('.full').addEventListener('click', function () {
-          if (el.requestFullscreen) el.requestFullscreen();
-          else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-        });
-        el.setAttribute('tabindex', '0');
-        el.addEventListener('keydown', function (e) {
-          if (e.keyCode === 39) { next(); e.preventDefault(); }
-          else if (e.keyCode === 37) { prev(); e.preventDefault(); }
-        });
-        for (var p = 1; p <= count; p++) { var pre = new Image(); pre.src = folder + '/' + p + '.jpg'; }
-        show(0);
-      })(decks[d]);
-    }
+    for (var d = 0; d < decks.length; d++) { setupDeck(decks[d]); }
   }
   if (document.readyState !== 'loading') initSlides();
   else document.addEventListener('DOMContentLoaded', initSlides);
