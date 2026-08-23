@@ -128,8 +128,7 @@ code{background:#F1E9D6;padding:1px 6px;border-radius:5px;font-size:.92em;font-f
 .fact .lbl{font-size:.84rem;color:#6E6A66;}
 
 /* right-hand "on this page" TOC */
-.toc-rail{flex:0 0 196px;width:196px;margin-left:30px;align-self:flex-start;}
-.toc{position:sticky;top:78px;padding:4px 0;}
+.toc{flex:0 0 196px;width:196px;margin-left:30px;position:sticky;top:78px;align-self:flex-start;padding:4px 0;}
 .toc .th{font-size:.74rem;text-transform:uppercase;letter-spacing:.07em;color:#A2946F;font-weight:700;font-family:'Nunito';margin-bottom:8px;}
 .toc a{display:block;color:#6E6A66;font-size:.88rem;padding:3px 0 3px 11px;border-left:2px solid #ECE2CC;}
 .toc a:hover{color:#0E9B6E;border-left-color:#1DC48E;text-decoration:none;}
@@ -154,7 +153,7 @@ footer .legal{color:#9A8F76;}
   footer{margin-left:0;}
   .menu-toggle{display:block;}
   main,main.has-toc{padding:24px 20px 70px;max-width:100%;}
-  .toc-rail{display:none;}
+  .toc{display:none;}
   .page-row{display:block;}
   .card{width:100%;margin-right:0;}
   .fact{min-width:0;width:46%;}
