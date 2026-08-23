@@ -59,3 +59,49 @@ var CONFIG = {
     }
   });
 })();
+
+/* ---- slide-deck preview carousels (added for lesson pages) ---- */
+(function () {
+  function initSlides() {
+    var decks = document.querySelectorAll('.slides[data-folder]');
+    for (var d = 0; d < decks.length; d++) {
+      (function (el) {
+        var folder = el.getAttribute('data-folder');
+        var count = parseInt(el.getAttribute('data-count') || '0', 10);
+        if (!count) return;
+        var idx = 0;
+        el.innerHTML =
+            '<div class="stage"><img alt="Slide 1"></div>'
+          + '<button class="nav prev" aria-label="Previous slide">&#8249;</button>'
+          + '<button class="nav next" aria-label="Next slide">&#8250;</button>'
+          + '<div class="bar"><span class="count"></span><button class="full">Fullscreen</button></div>';
+        var img = el.querySelector('img');
+        var counter = el.querySelector('.count');
+        function show(i) {
+          idx = (i % count + count) % count;
+          img.src = folder + '/' + (idx + 1) + '.jpg';
+          img.alt = 'Slide ' + (idx + 1);
+          counter.textContent = (idx + 1) + ' / ' + count;
+        }
+        function next() { show(idx + 1); }
+        function prev() { show(idx - 1); }
+        el.querySelector('.next').addEventListener('click', next);
+        el.querySelector('.prev').addEventListener('click', prev);
+        el.querySelector('.stage').addEventListener('click', next);
+        el.querySelector('.full').addEventListener('click', function () {
+          if (el.requestFullscreen) el.requestFullscreen();
+          else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        });
+        el.setAttribute('tabindex', '0');
+        el.addEventListener('keydown', function (e) {
+          if (e.keyCode === 39) { next(); e.preventDefault(); }
+          else if (e.keyCode === 37) { prev(); e.preventDefault(); }
+        });
+        for (var p = 1; p <= count; p++) { var pre = new Image(); pre.src = folder + '/' + p + '.jpg'; }
+        show(0);
+      })(decks[d]);
+    }
+  }
+  if (document.readyState !== 'loading') initSlides();
+  else document.addEventListener('DOMContentLoaded', initSlides);
+})();
