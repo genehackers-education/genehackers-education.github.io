@@ -1,6 +1,6 @@
-# Synthetic Biology Outreach Toolkit
+# Bioengineering Outreach Toolkit
 
-Free, hands-on synthetic biology lessons for kids, built by **UChicago Genehackers**, our student iGEM team. The Human Practices team built up a collection of activities and corresponding slide decks over the years, and Max Huang '28 formalized these learning materials, expanded the collection, and integrated everything into this public site.
+Free, hands-on bioengineering lessons for kids, built by **UChicago Genehackers**, our student iGEM team. The Human Practices team built up a collection of activities and corresponding slide decks over the years, and Max Huang '28 formalized these learning materials, expanded the collection, and integrated everything into this public site.
 
 **Live site → https://genehackers-education.github.io**
 
